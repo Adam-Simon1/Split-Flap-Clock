@@ -4,6 +4,9 @@
 #include <sntp.h>
 #include <AccelStepper.h>
 
+// If you want 12-hour clock change is12Hour to true
+bool is12Hour = false;
+
 // Wifi (Enter your wifi credentials)
 const char *ssid = "";
 const char *password = "";
@@ -59,6 +62,13 @@ Time localTime()
 
   int iHour = atoi(hour);
   int iMinute = atoi(minute);
+
+  if (is12Hour)
+  {
+    iHour = (iHour % 12);
+    if (iHour == 0)
+      iHour = 12;
+  }
 
   return {iHour, iMinute};
 }
